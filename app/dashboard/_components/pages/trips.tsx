@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import TripDetails from "./TripDetails";
 import { fetchTripData } from "../fetchdata/tripData";
 import AddTripMember from "./addTripMember";
+
+import logo from '@/public/logo1.png'
 import { useRefreshStore } from "@/zustand/useRefresh";
 import {
   CalendarDays,
@@ -71,7 +73,7 @@ const Trips = ({ setTripBoxOpen }: any) => {
   if (processing) {
     <div className="h-full w-full flex-col flex items-center justify-center min-h-screen">
       <Image
-        src="/logo1.png"
+        src={logo}
         width={120}
         height={120}
         alt="logo"
