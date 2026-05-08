@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -43,9 +44,11 @@ export default function Hero() {
 
           {/* BUTTONS */}
           <div className="mt-8 flex gap-4">
+            <Link href="/dashboard">
             <Button className="cursor-pointer px-5 py-3">
               Create Your Trip →
             </Button>
+            </Link>
 
             <Button variant="outline" className="cursor-pointer">
               ▶ See How It Works
