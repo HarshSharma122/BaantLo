@@ -41,7 +41,7 @@ const Dashboard = () => {
               {/* Text */}
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+                  <h1 className="text-2xl font-bold text-gray-800">
                     Your Trips
                   </h1>
 
@@ -51,15 +51,15 @@ const Dashboard = () => {
 
                 {/* Small Stats */}
                 <div className="mt-4 flex flex-wrap gap-3">
-                  <div className="rounded-full bg-indigo-100 px-4 py-1 text-xs font-medium text-indigo-700 sm:text-sm">
+                  <div className="rounded-full bg-indigo-100 px-4 py-1 text-[12px] font-medium text-indigo-700">
                     Smart Expense Tracking
                   </div>
 
-                  <div className="rounded-full bg-pink-100 px-4 py-1 text-xs font-medium text-pink-700 sm:text-sm">
+                  <div className="rounded-full bg-pink-100 px-4 py-1 text-[12px] font-medium text-pink-700">
                     Easy Group Splits
                   </div>
 
-                  <div className="rounded-full bg-green-100 px-4 py-1 text-xs font-medium text-green-700 sm:text-sm">
+                  <div className="rounded-full bg-green-100 px-4 py-1 text-[12px] font-medium text-green-700 ">
                     Trip Management
                   </div>
                 </div>
@@ -85,7 +85,7 @@ const Dashboard = () => {
                 onClick={() =>
                   setCreateTripBoxOpen(true)
                 }
-                className="h-11 rounded-xl bg-indigo-600 px-5 text-sm font-medium hover:bg-indigo-700 sm:px-6"
+                className="h-11 rounded-xl bg-indigo-600 text-sm font-medium hover:bg-indigo-700 "
               >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Trip

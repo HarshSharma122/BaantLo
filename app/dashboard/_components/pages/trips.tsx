@@ -85,12 +85,12 @@ const Trips = ({ setTripBoxOpen }: any) => {
       <>
         {!trips.length ? (
           <div className="flex min-h-[75vh] flex-col items-center justify-center px-4">
-            <div className="w-full max-w-md rounded-3xl border bg-white p-10 text-center shadow-xl">
+            <div className="w-full max-w-md rounded-3xl border bg-white p-5 text-center shadow-xl">
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100">
                 <Luggage className="h-10 w-10 text-indigo-600" />
               </div>
 
-              <h1 className="mt-6 text-3xl font-bold text-gray-800">
+              <h1 className="mt-6 text-2xl font-bold text-gray-800">
                 No Trips Yet
               </h1>
 

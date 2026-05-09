@@ -23,11 +23,6 @@ const Aside = () => {
       link: "/dashboard",
     },
     {
-      name: "Groups",
-      icon: <UsersRound className="w-5 h-5" />,
-      link: "/dashboard/group",
-    },
-    {
       name: "Profile",
       icon: <User className="w-5 h-5" />,
       link: "/dashboard/profile",
@@ -67,11 +62,11 @@ const Aside = () => {
       >
         {/* Top */}
         <div className="flex items-center justify-between border-b px-6 py-5">
-          <div className="flex items-center gap-3">
-            <Image src="/logo1.png" alt="logo" width={55} height={55} />
+          <div className="flex items-center gap-1">
+            <Image src="/logo1.png" alt="logo" width={70} height={70} />
 
             <div>
-              <h1 className="text-2xl font-bold text-indigo-600">
+              <h1 className="text-xl font-bold text-indigo-600">
                 BaantLo
               </h1>
 
@@ -97,12 +92,12 @@ const Aside = () => {
             Menu
           </p>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             {navItems.map((item, index) => (
               <Link
                 key={index}
                 href={item.link}
-                className="group flex items-center gap-3 text-[15px] rounded-xl px-4 py-3 text-gray-700 transition-all duration-200"
+                className="group flex items-center gap-2 text-[15px] rounded-xl px-4 py-3 text-gray-700 transition-all duration-200"
               >
                 <span className="transition-transform group-hover:scale-110">
                   {item.icon}
