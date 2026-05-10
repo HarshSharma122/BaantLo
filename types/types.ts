@@ -44,7 +44,11 @@ export interface userProps {
 
   totalTrip: string;
   totalSpend: string;
+  totalGroup:string;
 
+
+
+  image:string;
   createdAt: Date;
   updatedAt: Date;
 }

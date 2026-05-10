@@ -2,16 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Home,
-  LogOut,
-  User,
-  UsersRound,
-  Menu,
-  X,
-  Wallet,
-} from "lucide-react";
+import { Home, LogOut, User, Menu, X } from "lucide-react";
 import Image from "next/image";
+import { SignOutButton } from "@clerk/nextjs";
 
 const Aside = () => {
   const [open, setOpen] = useState(false);
@@ -38,10 +31,7 @@ const Aside = () => {
           <h1 className="text-xl font-bold text-indigo-600">BaantLo</h1>
         </div>
 
-        <button
-          onClick={() => setOpen(true)}
-          className="rounded-lg border p-2"
-        >
+        <button onClick={() => setOpen(true)} className="rounded-lg border p-2">
           <Menu className="w-5 h-5" />
         </button>
       </div>
@@ -66,13 +56,9 @@ const Aside = () => {
             <Image src="/logo1.png" alt="logo" width={70} height={70} />
 
             <div>
-              <h1 className="text-xl font-bold text-indigo-600">
-                BaantLo
-              </h1>
+              <h1 className="text-xl font-bold text-indigo-600">BaantLo</h1>
 
-              <p className="text-xs text-gray-500">
-                Split expenses smarter
-              </p>
+              <p className="text-xs text-gray-500">Split expenses smarter</p>
             </div>
           </div>
 
@@ -83,8 +69,6 @@ const Aside = () => {
             <X className="h-5 w-5" />
           </button>
         </div>
-
-    
 
         {/* Navigation */}
         <nav className="flex-1 px-4 py-6">
@@ -111,10 +95,12 @@ const Aside = () => {
 
         {/* Footer */}
         <div className="border-t p-4">
-          <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-500 transition hover:bg-red-50">
-            <LogOut className="w-5 h-5" />
-            <span className="font-medium">Logout</span>
-          </button>
+          <SignOutButton>
+            <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-500 transition hover:bg-red-50">
+              <LogOut className="w-5 h-5" />
+              <span className="font-medium">Logout</span>
+            </button>
+          </SignOutButton>
         </div>
       </aside>
     </>

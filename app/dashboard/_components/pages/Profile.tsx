@@ -48,21 +48,7 @@ const Profile = () => {
       iconColor: "text-green-600",
     },
 
-    {
-      title: "Settled Amount",
-      value: "₹1,200",
-      icon: Trophy,
-      bg: "bg-purple-100",
-      iconColor: "text-purple-600",
-    },
-
-    {
-      title: "Pending Amount",
-      value: "₹1,800",
-      icon: Clock3,
-      bg: "bg-orange-100",
-      iconColor: "text-orange-600",
-    },
+   
   ];
 
   return (
@@ -103,20 +89,6 @@ const Profile = () => {
                   <p className="text-sm">{user?.primaryEmailAddress?.emailAddress}</p>
                 </div>
               </div>
-            </div>
-
-            {/* Right Buttons */}
-            <div className="flex flex-wrap gap-3">
-           
-              <SignOutButton>
-                <Button
-                  variant="destructive"
-                  className="rounded-xl px-5"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </Button>
-              </SignOutButton>
             </div>
           </div>
         </div>

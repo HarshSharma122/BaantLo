@@ -34,13 +34,12 @@ export async function POST(req: Request) {
   // 🎯 HANDLE EVENT
   if (evt.type === "user.created") {
     const userData = evt.data;
-    
-
     await user.create({
       userId: userData.id,
       email: userData.email_addresses[0]?.email_address,
       name: userData.first_name,
       image: userData.image_url,
+      
     });
   }
 

@@ -22,6 +22,8 @@ export const POST = async (req: NextRequest) => {
       throw new Error("Please fill all the details");
     }
 
+
+
     await trip.create({
       tripName: tripName,
       tripLocation,
@@ -29,6 +31,10 @@ export const POST = async (req: NextRequest) => {
       tripOwnerId: userId,
     });
 
+
+
+
+    
     return NextResponse.json(
       { msg: "Trip Created SuccessFully" },
       { status: 200 },

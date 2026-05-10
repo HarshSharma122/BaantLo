@@ -21,6 +21,12 @@ const userSchema = new Schema<userProps>({
     totalTrip:{
         type:String,
         default:"0"
+    },
+    totalGroup:{
+        type:String,
+    },
+    image:{
+        type:String,
     }
 },{timestamps:true});
 
