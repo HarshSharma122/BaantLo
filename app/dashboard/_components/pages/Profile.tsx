@@ -94,7 +94,7 @@ const Profile = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {/* <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {stats.map((item, index) => {
             const Icon = item.icon;
 
@@ -121,7 +121,7 @@ const Profile = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
 
         {/* Bottom Section */}
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">

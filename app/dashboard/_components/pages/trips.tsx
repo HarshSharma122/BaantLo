@@ -20,7 +20,7 @@ import {
 import Image from "next/image";
 
 const Trips = ({ setTripBoxOpen }: any) => {
-  const { isRefresh } = useRefreshStore();
+  const { isRefresh, setIsRefresh } = useRefreshStore();
 
   const [processing, setProcessing] = useState(false);
 

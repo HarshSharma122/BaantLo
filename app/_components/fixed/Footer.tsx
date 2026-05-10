@@ -23,14 +23,16 @@ const Footer = () => {
             {/* Social Links */}
             <div className="mt-5 flex items-center gap-4">
               <Link
-                href="#"
+              target="_blank"
+                href="https://www.linkedin.com/in/harsh-sharma016/"
                 className="rounded-full border p-2 text-gray-700 transition hover:bg-black hover:text-white"
               >
                 <CiLinkedin className="h-5 w-5" />
               </Link>
 
               <Link
-                href="#"
+              target="_blank"
+                href="https://feeddrill.site/"
                 className="rounded-full border p-2 text-gray-700 transition hover:bg-black hover:text-white"
               >
                 <CgWebsite className="h-5 w-5" />

@@ -22,7 +22,7 @@ import {
   X,
 } from "lucide-react";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const TripDetails = ({
@@ -421,6 +421,7 @@ const TripDetails = ({
                           <h3 className="truncate font-semibold text-gray-800">
                             {member.name}
                           </h3>
+                          <p className="text-xs text-gray-600">{member.phoneNo}</p>
 
                           <p className="truncate text-sm text-gray-500">
                             {member.email}
