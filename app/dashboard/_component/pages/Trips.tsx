@@ -6,6 +6,10 @@ import TripList from './tripList'
 
 const Trips = () => {
     return (
+         <div className="min-h-screen  px-4 py-8 sm:px-6 lg:px-10">
+      
+
+
         <div className='ml-5'>
             <div className='flex items-center justify-between'>
                 <div className="">
@@ -33,6 +37,7 @@ const Trips = () => {
 
 
 
+        </div>
         </div>
     )
 }
