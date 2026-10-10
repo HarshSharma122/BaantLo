@@ -2,22 +2,21 @@
 
 import Footer from '@/app/_components/fixed/Footer/Footer';
 import Header from '@/app/_components/fixed/Header/Header';
-import { useParams, usePathname } from 'next/navigation'
-import React from 'react'
+import { usePathname } from 'next/navigation';
+import React from 'react';
 
-const Wrapper = ({children}:{children:React.ReactNode}) => {
-    const pathName = usePathname();
-
-
+const Wrapper = ({ children }: { children: React.ReactNode }) => {
+  const pathName = usePathname();
+  const authPath = pathName.startsWith("/auth");
+  const dashPath = pathName.startsWith("/dashboard");
 
 
   return (
     <div>
-      {pathName != "get-started" && <Header/> }  
+      {!authPath && !dashPath && <Header />}
       {children}
-      {pathName != "get-started" && <Footer/> }  
+      {!authPath && !dashPath && <Footer />}
     </div>
   )
 }
-
-export default Wrapper
+export default Wrapper;

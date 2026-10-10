@@ -17,10 +17,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="max-w-sm">
             <div className="">
-            <Link href="/">
-            <Image src="/footerlogo.png" alt='logo' width={120} height={120}/>
-            </Link>
-        </div>
+              <Link href="/">
+                <Image src="/footerlogo.png" alt='logo' width={120} height={120} className="w-auto h-auto" />
+              </Link>
+            </div>
 
 
             <p className="mt-2 text-sm font-medium text-[#85D91F]">
@@ -150,7 +150,7 @@ const Footer = () => {
   );
 };
 
-const FooterColumn = ({ title, links }:any) => {
+const FooterColumn = ({ title, links }: any) => {
   return (
     <div>
       <h3 className="mb-5 text-sm font-semibold text-white">
@@ -158,7 +158,7 @@ const FooterColumn = ({ title, links }:any) => {
       </h3>
 
       <ul className="space-y-3">
-        {links.map((link:any) => (
+        {links.map((link: any) => (
           <li key={link}>
             <a
               href="#"

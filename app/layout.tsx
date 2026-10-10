@@ -1,30 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import {Bricolage_Grotesque, Mansalva} from "next/font/google";
+import { Bricolage_Grotesque, Mansalva } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Wrapper from "@/utils/wrapper/wrapper";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",
   display: "swap",
 });
-
-// const mansalva = Mansalva({
-//   subsets:["latin"],
-//   weight:["400"],
-//   variable:"--font-mansalva",
-//   display:"swap",
-// });
-
-
-
-
-
-
-
-
 
 export const metadata: Metadata = {
   title: "Baantlo",
@@ -35,12 +21,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", bricolage.className, )}
+      className={cn("h-full", "antialiased", bricolage.className,)}
     >
       <body className="min-h-full flex flex-col lg:px-14 px-2 py-5">
-        <Wrapper>
-          {children}
-        </Wrapper>
+        <ClerkProvider>
+
+          <Wrapper>
+            {children}
+          </Wrapper>
+        </ClerkProvider>
 
       </body>
     </html>

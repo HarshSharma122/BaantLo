@@ -57,7 +57,7 @@ const Header = () => {
 
           {/* Desktop buttons */}
           <div className="hidden shrink-0 items-center sm:flex">
-            <Link href="/get-started">
+            <Link href="/auth/sign-up">
               <Button
                 className="
                   mr-1 px-3 py-2 text-[12px]
@@ -69,16 +69,19 @@ const Header = () => {
               </Button>
             </Link>
 
-            <Button
-              variant="outline"
-              className="
+            <Link href="/auth/sign-in">
+              <Button
+                variant="outline"
+                className="
                 px-3 py-2 text-[12px]
                 sm:px-4 sm:py-2.5 sm:text-[14px]
                 md:px-5 md:py-3 md:text-[16px]
               "
-            >
-              Login
-            </Button>
+              >
+                Login
+              </Button>
+            </Link>
+
           </div>
 
           {/* Mobile menu button */}
@@ -116,10 +119,9 @@ const Header = () => {
             bg-white shadow-lg
             transition-all duration-300 ease-in-out
             sm:hidden
-            ${
-              isOpen
-                ? "max-h-[500px] translate-y-0 opacity-100"
-                : "pointer-events-none max-h-0 -translate-y-3 opacity-0"
+            ${isOpen
+              ? "max-h-[500px] translate-y-0 opacity-100"
+              : "pointer-events-none max-h-0 -translate-y-3 opacity-0"
             }
           `}
         >
@@ -159,7 +161,7 @@ const Header = () => {
             {/* Mobile buttons */}
             <div className="mt-3 flex gap-2 border-t pt-4">
               <Link
-                href="/get-started"
+                href="/auth/sign-up"
                 onClick={() => setIsOpen(false)}
                 className="flex-1"
               >
@@ -168,6 +170,8 @@ const Header = () => {
                 </Button>
               </Link>
 
+
+              <Link href="/auth/sign-in">
               <Button
                 variant="outline"
                 className="flex-1 text-[12px]"
@@ -175,6 +179,7 @@ const Header = () => {
               >
                 Login
               </Button>
+              </Link>
             </div>
           </div>
         </div>
