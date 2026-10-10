@@ -8,7 +8,7 @@ import CreateTrip from "./_component/pages/CreateTrip"
 const page = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="min-h-screen  px-4 py-8 sm:px-6 lg:px-10">
+    <div className="min-h-screen  px-4 lg:py-8 py-10 sm:px-6 lg:px-10">
     
 
 

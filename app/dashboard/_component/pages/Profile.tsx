@@ -36,7 +36,7 @@ const Profile = () => {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen px-4 py-8 sm:px-6 lg:px-10">
+    <div className="min-h-screen px-4 lg:py-8 py-10 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
         {/* Page Header */}
         <div className="mb-8">

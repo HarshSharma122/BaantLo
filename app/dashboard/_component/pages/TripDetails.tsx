@@ -61,11 +61,11 @@ const TripDetails = ({ id }: { id: any }) => {
     const [notification, setNotification] = useState(false);
     return (
         <>
-            <div className="min-h-screen  px-4 py-8 sm:px-6 lg:px-10">
+            <div className="min-h-screen  px-4 lg:py-8 py-10 sm:px-6 lg:px-10">
 
                 <div className="">
                     {/* Top Header */}
-                    <div className='flex items-center justify-between'>
+                    <div className='flex lg:flex-row flex-col items-center lg:justify-between'>
                         <div className="">
 
                             <h1 className='text-2xl font-semibold'>Manali Adventure</h1>
@@ -75,7 +75,7 @@ const TripDetails = ({ id }: { id: any }) => {
 
                         </div>
 
-                        <div className="space-x-2">
+                        <div className="space-x-2 lg:mb-0 mb-2">
                             <Button onClick={() => setNotification(true)}>Trip Ended</Button>
                             <Button onClick={() => setOpenExpenseInput(true)} variant="outline">Add Expenses</Button>
                         </div>
