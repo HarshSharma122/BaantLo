@@ -7,15 +7,15 @@ import React from 'react';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname();
-  const authPath = pathName.startsWith("/auth");
+  
   const dashPath = pathName.startsWith("/dashboard");
 
 
   return (
     <div>
-      {!authPath && !dashPath && <Header />}
+      {!dashPath && <Header />}
       {children}
-      {!authPath && !dashPath && <Footer />}
+      {!dashPath && <Footer />}
     </div>
   )
 }

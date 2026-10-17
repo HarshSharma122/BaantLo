@@ -12,9 +12,9 @@ const userSchema = new Schema<userProps>(
       type: String,
       required: true,
     },
-    userId: {
-      type: String,
-      required: true,
+    password:{
+      type:String,
+      required:true
     },
     totalSpend: {
       type: String,
@@ -29,10 +29,13 @@ const userSchema = new Schema<userProps>(
     },
     plan: {
       type: String,
+      default:"free"
     },
     isNotification: {
       type: Boolean,
+      default:false
     },
+   
   },
   {
     timestamps: true,

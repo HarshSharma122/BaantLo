@@ -5,11 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Signup from "../../auth/signup";
+import Login from "../../auth/Login";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const[authSignUpOpen, setAuthSignUpOpen]= useState(false);
+  const[isLoginOpen, setisLoginOpen]= useState(false);
 
   return (
+    <>
     <div className="flex items-center justify-center px-3 py-3 sm:px-4">
       <div className="relative w-full max-w-200">
         {/* Header */}
@@ -57,8 +62,9 @@ const Header = () => {
 
           {/* Desktop buttons */}
           <div className="hidden shrink-0 items-center sm:flex">
-            <Link href="/auth/sign-up">
+           
               <Button
+              onClick={()=>setAuthSignUpOpen(true)}
                 className="
                   mr-1 px-3 py-2 text-[12px]
                   sm:mr-2 sm:px-4 sm:py-2.5 sm:text-[14px]
@@ -67,10 +73,10 @@ const Header = () => {
               >
                 Sign Up
               </Button>
-            </Link>
+          
 
-            <Link href="/auth/sign-in">
               <Button
+                onClick={()=>setisLoginOpen(true)}
                 variant="outline"
                 className="
                 px-3 py-2 text-[12px]
@@ -80,8 +86,7 @@ const Header = () => {
               >
                 Login
               </Button>
-            </Link>
-
+          
           </div>
 
           {/* Mobile menu button */}
@@ -185,6 +190,20 @@ const Header = () => {
         </div>
       </div>
     </div>
+
+
+
+    {
+      authSignUpOpen && (
+        <Signup  setIsLoginOpen={setisLoginOpen} setAuthSignUpOpen={setAuthSignUpOpen}/>
+      )
+    }
+    {
+      isLoginOpen && (
+        <Login setIsLoginOpen={setisLoginOpen} setAuthSignUpOpen={setAuthSignUpOpen}/>
+      )
+    }
+    </>
   );
 };
 

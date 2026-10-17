@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { Bricolage_Grotesque, Mansalva } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Wrapper from "@/utils/wrapper/wrapper";
-import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -24,12 +24,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={cn("h-full", "antialiased", bricolage.className,)}
     >
       <body className="min-h-full flex flex-col lg:px-14 px-2 py-5">
-        <ClerkProvider>
-
-          <Wrapper>
-            {children}
-          </Wrapper>
-        </ClerkProvider>
+        <Toaster position="top-left" richColors/>
+        <Wrapper>
+          {children}
+        </Wrapper>
 
       </body>
     </html>

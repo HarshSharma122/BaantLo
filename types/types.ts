@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 export interface userProps{
     _id:mongoose.Types.ObjectId;
     name:string;
-    userId:string;
+    password:string;
     email:string;
     currency:string;
     totalTrip:string;
     totalGroup:string;
     totalSpend:string;
-    plan:"free" | "Pro";
+    plan:string;
     isNotification:boolean;
     createdAt:Date;
     updatedAt:Date;
