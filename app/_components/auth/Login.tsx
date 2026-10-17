@@ -3,12 +3,13 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import { FaGoogle, FaTwitter } from 'react-icons/fa'
 import { toast } from 'sonner'
 
 const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function, setAuthSignUpOpen: Function }) => {
-
+  const router = useRouter();
 
   const [input, setInput] = useState({
     email: "",
@@ -33,9 +34,10 @@ const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function
       })
       const message = await response.json();
 
-      if (response.ok) {
+      if (message.status == 200) {
         toast.message(message.message);
         setIsLoginOpen(false);
+        router.push("/dashboard");
       } else {
         toast.error(message.message);
         return;
@@ -49,7 +51,7 @@ const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function
 
 
   const handleChange = (e: any) => {
-    setInput({ ...input, [e.target.name]: [e.target.value] })
+    setInput({ ...input, [e.target.name]: e.target.value })
   }
 
 
