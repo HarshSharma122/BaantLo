@@ -9,7 +9,7 @@ import {
 
 const Contact = () => {
   return (
-    <section className="min-h-screen overflow-hidden  px-6 py-20 md:px-10 lg:px-16">
+    <section id="contact" className="min-h-screen overflow-hidden  px-6 py-20 md:px-10 lg:px-16">
       <div className="relative mx-auto max-w-7xl">
 
         {/* Background Glow */}

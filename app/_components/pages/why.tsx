@@ -46,7 +46,7 @@ const features = [
 const Why = () => {
   return (
     <section
-      id="why-baantlo"
+      id="feature"
       className="relative overflow-hidden  px-5 py-20 text-[#171914] sm:px-8 sm:py-28 lg:px-12"
     >
       <div className="mx-auto max-w-7xl">

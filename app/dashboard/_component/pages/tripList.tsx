@@ -1,6 +1,7 @@
+"use client"
 import { Button } from '@/components/ui/button';
 import { ArrowUpRight, CalendarDays, MapPin, Plane, Users, Wallet } from 'lucide-react';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Pagination,
     PaginationContent,
@@ -11,6 +12,8 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import Link from 'next/link';
+import { tripProps } from '@/types/types';
+import Image from 'next/image';
 
 const trips = [
     {
@@ -225,18 +228,64 @@ const trips = [
         updatedAt: "2026-10-01T08:30:00.000Z",
     },
 
- 
+
 ];
 
 const TripList = () => {
+    const [trips, setTrips] = useState<tripProps[]>([]);
+
+    const [loading, setLoading] = useState(true);
+
+
+
+
+    useEffect(() => {
+
+        async function tripList() {
+            try {
+                const res = await fetch("/api/trip/tripList");
+                if (!res.ok) {
+                    setTrips([]);
+                    return;
+                }
+
+                const data = await res.json();
+                setTrips(data.msg);
+            } catch {
+                setTrips([]);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        tripList();
+    }, [])
+
+
+
+
+    if (loading || !trips.length) {
+        return (
+            <div className="h-full w-full flex-col flex items-center justify-center min-h-screen">
+                <Image
+                    src="/logo-1.png"
+                    loading="eager"
+                    width={230}
+                    height={230}
+                    alt="logo"
+                    className="animate-pulse duration-700"
+                />
+            </div>
+        )
+    }
     return (
+        <>
+
         <div className='mt-10'>
-
-
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-                {trips.map((trip) => (
+                  {trips.map((trip, index) => (
                     <div
-                        key={trip._id}
+                        key={index}
                         className="group overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[#85D91F] hover:shadow-xl hover:shadow-neutral-200/50"
                     >
                         {/* Card header */}
@@ -262,7 +311,7 @@ const TripList = () => {
                             </h3>
 
                             <p className="mt-1 line-clamp-2 min-h-10 text-sm leading-5 text-neutral-500">
-                                {trip.tripDescription}
+                                {trip.tripDesc}
                             </p>
 
                             <div className="mt-5 space-y-3 border-t border-neutral-100 pt-4">
@@ -288,19 +337,19 @@ const TripList = () => {
                                     </span>
                                 </div>
 
-                                <div className="flex items-center gap-3 text-sm text-neutral-600">
+                                {/* <div className="flex items-center gap-3 text-sm text-neutral-600">
                                     <Wallet size={17} className="shrink-0 text-neutral-400" />
                                     <span>
                                         Budget:{" "}
                                         <span className="font-semibold text-neutral-900">
                                             {new Intl.NumberFormat("en-IN", {
                                                 style: "currency",
-                                                currency: trip.currency || "INR",
+                                                currency: trip.tripCurrency || "INR",
                                                 maximumFractionDigits: 0,
                                             }).format(trip.tripBudget)}
                                         </span>
                                     </span>
-                                </div>
+                                </div> */}
                             </div>
 
                             {/* Card footer */}
@@ -322,49 +371,17 @@ const TripList = () => {
                     </div>
                 ))}
 
+
+
             </div>
 
-
-
-
-
-
-
-
-            <div className="mt-4">
-                {/* Pagination */}
-
-                <Pagination>
-                    <PaginationContent>
-                        <PaginationItem>
-                            <PaginationPrevious href="#" />
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink href="#">1</PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink href="#" isActive>
-                                2
-                            </PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink href="#">3</PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationEllipsis />
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationNext href="#" />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
-            </div>
 
 
 
 
 
         </div>
+        </>
     )
 }
 

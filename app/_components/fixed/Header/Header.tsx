@@ -38,21 +38,6 @@ const Header = () => {
   }, []);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <div className="flex items-center justify-center px-3 py-3 sm:px-4">
@@ -93,11 +78,24 @@ const Header = () => {
                 <li className="list-none">Home</li>
               </Link>
 
-              <li className="list-none">About</li>
 
-              <li className="list-none">Features</li>
+              <Link href="#about">
+                <li className="list-none">About</li>
+              </Link>
 
-              <li className="list-none">Contact</li>
+
+
+              <Link href="#feature">
+                <li className="list-none">Features</li>
+              </Link>
+
+
+              <Link href="#contact">
+
+                <li className="list-none">Contact</li>
+              </Link>
+
+
             </div>
 
             {/* Desktop buttons */}

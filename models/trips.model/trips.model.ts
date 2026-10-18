@@ -20,6 +20,9 @@ const tripSchema = new Schema<tripProps>(
     tripName: {
       type: String,
     },
+    tripDesc:{
+      type:String,
+    },
     tripStartDate: {
       type: String,
     },
@@ -37,6 +40,10 @@ const tripSchema = new Schema<tripProps>(
     },
     tripMoney: {
       type: String,
+      default:"0"
+    },
+    tripCurrency:{
+      type:String,
     },
     tripExpense: [tripExpenses],
     tripHistory: [
