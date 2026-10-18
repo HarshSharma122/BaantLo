@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Signup from "../../auth/signup";
 import Login from "../../auth/Login";
@@ -12,6 +12,46 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [authSignUpOpen, setAuthSignUpOpen] = useState(false);
   const [isLoginOpen, setisLoginOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/auth/user");
+
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json();
+        setUser(data.user);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    checkAuth();
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -63,16 +103,42 @@ const Header = () => {
             {/* Desktop buttons */}
             <div className="hidden shrink-0 items-center sm:flex">
 
-              <Button
-                onClick={() => setAuthSignUpOpen(true)}
-                className="
+
+              {
+                !user ? (
+
+                  <Button
+                    onClick={() => setAuthSignUpOpen(true)}
+                    className="
                   mr-1 px-3 py-2 text-[12px]
                   sm:mr-2 sm:px-4 sm:py-2.5 sm:text-[14px]
                   md:px-5 md:py-3 md:text-[16px]
                 "
-              >
-                Sign Up
-              </Button>
+                  >
+                    Sign Up
+                  </Button>
+
+                ) : (
+                  <Link href="/dashboard">
+                    <Button
+                      className="
+                  mr-1 px-3 py-2 text-[12px]
+                  sm:mr-2 sm:px-4 sm:py-2.5 sm:text-[14px]
+                  md:px-5 md:py-3 md:text-[16px]
+                "
+                    >
+                      Dashboard
+                    </Button>
+                  </Link>
+
+                )
+              }
+
+
+
+
+
+
 
 
               <Button
@@ -198,7 +264,7 @@ const Header = () => {
 
 
 
-                
+
 
               </div>
             </div>

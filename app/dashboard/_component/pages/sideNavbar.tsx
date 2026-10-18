@@ -15,10 +15,37 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const SideNavbar = () => {
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [activeItem, setActiveItem] = useState("Dashboard");
+
+
+    const [isLogout, setIsLogout] = useState(false);
+
+    const logout = async () => {
+        setIsLogout(true);
+
+
+
+        const response = await fetch("/api/auth/logout", {
+            method: "POST",
+        });
+
+        if (response.ok) {
+            toast.message('You successFully log out')
+            setIsLogout(false);
+            router.push("/");
+        }
+        else {
+            toast.error('Error! please try again later')
+            setIsLogout(false);
+
+        }
+    }
 
     const navItems = [
         { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
@@ -98,7 +125,6 @@ const SideNavbar = () => {
                     </div>
 
                     <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold">Hey, Harsh!</p>
                         <p className="mt-0.5 text-xs text-neutral-400">
                             Welcome to BaantLo
                         </p>
@@ -136,8 +162,8 @@ const SideNavbar = () => {
                                     <ChevronRight
                                         size={16}
                                         className={`transition-transform ${isActive
-                                                ? "opacity-100"
-                                                : "opacity-0 group-hover:translate-x-0.5 group-hover:opacity-70"
+                                            ? "opacity-100"
+                                            : "opacity-0 group-hover:translate-x-0.5 group-hover:opacity-70"
                                             }`}
                                     />
                                 </button>
@@ -148,12 +174,14 @@ const SideNavbar = () => {
 
                 {/* Bottom section */}
                 <div className="mt-auto">
-                  
+
 
                     <div className="border-t border-white/10 pt-4">
                         <button
+                        disabled={isLogout}
                             onClick={() => {
                                 // Add your logout logic here.
+                                logout()
                                 setIsOpen(false);
                             }}
                             className="flex w-full items-center gap-3 rounded-xl px-3 py-3
@@ -164,7 +192,7 @@ const SideNavbar = () => {
                             <span>Log out</span>
                         </button>
 
-                      
+
                     </div>
                 </div>
             </aside>

@@ -10,6 +10,7 @@ import { toast } from 'sonner'
 
 const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function, setAuthSignUpOpen: Function }) => {
   const router = useRouter();
+  const[isBtnClick, setIsBtnClick] = useState(false);
 
   const [input, setInput] = useState({
     email: "",
@@ -19,6 +20,7 @@ const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function
 
 
   const handleSubmit = async (e: FormEvent) => {
+    setIsBtnClick(true);
     e.preventDefault();
     try {
 
@@ -35,6 +37,7 @@ const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function
       const message = await response.json();
 
       if (message.status == 200) {
+        setIsBtnClick(false);
         toast.message(message.message);
         setIsLoginOpen(false);
         router.push("/dashboard");
@@ -87,6 +90,7 @@ const Login = ({ setIsLoginOpen, setAuthSignUpOpen }: { setIsLoginOpen: Function
 
           <div className="flex gap-3 pt-2">
             <Button
+            disabled={isBtnClick}
               onClick={handleSubmit}
               type="submit"
               className={`flex-1`}

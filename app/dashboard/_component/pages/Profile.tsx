@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserRound,
   CalendarDays,
@@ -15,21 +15,90 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { userProps } from "@/types/types";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const Profile = () => {
-  const profile = {
-    name: "harsh sharma",
-    _id: "user_01001",
-    email: "harsh444577@gmail.com",
-    createdAt: "10/10/26",
-    plan: "Free",
-    isProMember: false,
-  };
-
+  const router  =  useRouter();
+  const [user, setUser] = useState<userProps>();
+  const [loading, setLoading] = useState(true);
+  
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const initials = profile.name
+
+  const[isLogout, setIsLogout] = useState(false);
+
+  const logout = async()=>{
+    setIsLogout(true);
+
+
+
+    const response = await fetch("/api/auth/logout", {
+      method:"POST",
+    });
+
+    if(response.ok){
+      toast.message('You successFully log out')
+      setIsLogout(false);
+      router.push("/");
+    }
+    else{
+      toast.error('Error! please try again later')
+      setIsLogout(false);
+
+    }
+  }
+
+
+
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/auth/user");
+
+        if (!res.ok) {
+          setUser(undefined);
+          return;
+        }
+
+        const data = await res.json();
+        setUser(data.user);
+      } catch {
+        setUser(undefined);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    checkAuth();
+  }, []);
+
+
+
+
+  if (loading) {
+    return (
+      <div className="h-full w-full flex-col flex items-center justify-center min-h-screen">
+        <Image
+          src="/logo-1.png"
+          loading="eager"
+          width={230}
+          height={230}
+          alt="logo"
+          className="animate-pulse duration-700"
+        />
+      </div>
+    )
+  }
+
+
+
+  const initials = user?.name
     .split(" ")
     .map((part) => part[0])
     .join("")
@@ -68,10 +137,10 @@ const Profile = () => {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <h2 className="text-2xl font-semibold capitalize tracking-tight sm:text-3xl">
-                        {profile.name}
+                        {user?.name}
                       </h2>
 
-                      {profile.isProMember && (
+                      {user?.plan == "Pro" && (
                         <span className="flex items-center gap-1 rounded-full bg-[#85D91F]/15 px-3 py-1 text-xs font-medium text-[#B7F56A]">
                           <Crown size={13} />
                           Pro Member
@@ -81,11 +150,11 @@ const Profile = () => {
 
                     <p className="mt-2 flex items-center gap-2 break-all text-sm text-white/55">
                       <Mail size={15} className="shrink-0" />
-                      {profile.email}
+                      {user?.email}
                     </p>
 
                     <p className="mt-3 text-xs text-white/40">
-                      Member ID: {profile._id}
+                      Member ID: {user?._id as any}
                     </p>
                   </div>
 
@@ -105,7 +174,7 @@ const Profile = () => {
 
                   <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
                     <p className="text-xs text-white/45">Current plan</p>
-                    <p className="mt-2 text-sm font-medium">{profile.plan}</p>
+                    <p className="mt-2 text-sm font-medium">{user?.plan}</p>
                   </div>
                 </div>
               </div>
@@ -136,14 +205,12 @@ const Profile = () => {
                   onClick={() =>
                     setNotificationsEnabled((previous) => !previous)
                   }
-                  className={`relative mt-1 h-6 w-11 shrink-0 rounded-full transition ${
-                    notificationsEnabled ? "bg-[#85D91F]" : "bg-[#D4D4D0]"
-                  }`}
+                  className={`relative mt-1 h-6 w-11 shrink-0 rounded-full transition ${notificationsEnabled ? "bg-[#85D91F]" : "bg-[#D4D4D0]"
+                    }`}
                 >
                   <span
-                    className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm transition-all ${
-                      notificationsEnabled ? "left-6" : "left-1"
-                    }`}
+                    className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm transition-all ${notificationsEnabled ? "left-6" : "left-1"
+                      }`}
                   />
                 </button>
               </div>
@@ -155,11 +222,10 @@ const Profile = () => {
                     : "Notifications are disabled"}
                 </span>
                 <span
-                  className={`rounded-full px-3 py-1 text-xs font-medium ${
-                    notificationsEnabled
+                  className={`rounded-full px-3 py-1 text-xs font-medium ${notificationsEnabled
                       ? "bg-[#F0F8E7] text-[#65A914]"
                       : "bg-[#F4F4F1] text-[#888]"
-                  }`}
+                    }`}
                 >
                   {notificationsEnabled ? "On" : "Off"}
                 </span>
@@ -233,7 +299,7 @@ const Profile = () => {
                     CURRENT PLAN
                   </p>
                   <h3 className="mt-2 text-2xl font-semibold tracking-tight text-[#222]">
-                    {profile.plan}
+                    {user?.plan}
                   </h3>
                   <p className="mt-1 text-sm text-[#888]">
                     Simple expense management.
@@ -254,12 +320,12 @@ const Profile = () => {
                 <div>
                   <p className="text-xs text-[#999]">Member since</p>
                   <p className="mt-1 text-sm font-medium text-[#222]">
-                    {profile.createdAt}
+                    {new Date(user?.createdAt as Date).toDateString()}
                   </p>
                 </div>
               </div>
 
-              {!profile.isProMember && (
+              {user?.plan != "Pro" && (
                 <div className="mt-6 rounded-2xl bg-[#F6F9F0] p-4">
                   <p className="text-sm font-semibold text-[#222]">
                     Enjoy simple group expenses
@@ -311,13 +377,11 @@ const Profile = () => {
                   </p>
                 </div>
               </div>
-
               <Button
                 variant="outline"
+                disabled={isLogout}
                 className="mt-5 w-full justify-between border-[#E6E6E0] text-[#333] hover:border-[#85D91F] hover:bg-[#F6F9F0]"
-                onClick={() => {
-                  // Connect your Clerk sign-out logic here.
-                }}
+                onClick={() => logout()}
               >
                 Logout
                 <ArrowUpRight size={16} />
