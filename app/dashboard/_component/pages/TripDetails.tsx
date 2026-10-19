@@ -1,10 +1,16 @@
 
+"use client"
 
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight, CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Receipt, TrendingUp, Users, Wallet } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddExpense from './AddExpense';
 import Notification from '@/components/pages/Notification';
+import { tripProps } from '@/types/types';
+import { toast } from 'sonner';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { DateConvert } from '@/utils/DateConversion/DateConversion';
 
 const members = [
     {
@@ -57,8 +63,60 @@ const expenses = [
     },
 ];
 const TripDetails = ({ id }: { id: any }) => {
+    const router = useRouter();
+    const [trip, setTrip] = useState<tripProps>();
+    const [loading, setLoading] = useState(true);
     const [openExpenseInput, setOpenExpenseInput] = useState(false);
     const [notification, setNotification] = useState(false);
+
+    useEffect(() => {
+        const tripDetail = async () => {
+            try {
+                const response = await fetch(`/api/trip/${id}`);
+                const data = await response.json();
+                if (response.status!=200) {
+                    setTrip(undefined);
+                    toast.error(data.msg);
+                    router.push("/dashboard/trips");
+                }
+                if (response.status == 200) {
+                    setTrip(data.msg);
+                    setLoading(false);
+                }
+            } catch (error) {
+                setTrip(undefined);
+                toast.error("Server Error");
+
+            }
+        }
+
+        tripDetail();
+    }, [loading, setLoading])
+
+
+
+    if (loading) {
+        return (
+            <div className="h-full w-full flex-col flex items-center justify-center min-h-screen">
+                <Image
+                    src="/logo-1.png"
+                    loading="eager"
+                    width={230}
+                    height={230}
+                    alt="logo"
+                    className="animate-pulse duration-700"
+                />
+            </div>
+        )
+    }
+
+
+
+
+
+
+
+
     return (
         <>
             <div className="min-h-screen  px-4 lg:py-8 py-10 sm:px-6 lg:px-10">
@@ -68,9 +126,9 @@ const TripDetails = ({ id }: { id: any }) => {
                     <div className='flex lg:flex-row flex-col items-center lg:justify-between'>
                         <div className="">
 
-                            <h1 className='text-2xl font-semibold'>Manali Adventure</h1>
+                            <h1 className='text-2xl font-semibold'>{trip?.tripName || "_"}</h1>
                             <p className="mt-1 line-clamp-2 min-h-10 text-sm leading-5 text-neutral-500">
-                                A 4-day trip with college friends
+                              {trip?.tripDesc || "NONE"}
                             </p>
 
                         </div>
@@ -167,7 +225,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                     </p>
 
                                     <p className="mt-1 text-2xl font-semibold text-[#222]">
-                                        3
+                                       {trip?.tripMembers.length || 0}
                                     </p>
                                 </div>
 
@@ -183,7 +241,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                     </p>
 
                                     <p className="mt-1 text-2xl font-semibold text-[#222]">
-                                        8
+                                        {trip?.tripExpense.length || 0}
                                     </p>
                                 </div>
 
@@ -281,7 +339,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                         </p>
 
                                         <h3 className="mt-1 text-xl font-semibold tracking-tight text-[#222]">
-                                            Goa Getaway
+                                          {trip?.tripName || "_"}
                                         </h3>
                                     </div>
 
@@ -309,7 +367,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </p>
 
                                             <p className="mt-0.5 text-sm font-medium text-[#222]">
-                                                Goa, India
+                                               {trip?.tripLocation || "NONE"}
                                             </p>
                                         </div>
 
@@ -331,7 +389,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </p>
 
                                             <p className="mt-0.5 text-sm font-medium text-[#222]">
-                                                12 Oct — 16 Oct 2026
+                                               {trip?.tripStartDate && DateConvert(new Date(trip?.tripStartDate))} —  {trip?.tripEndDate ? DateConvert(new Date(trip?.tripEndDate)) : "Not Confirmed"}
                                             </p>
                                         </div>
 
