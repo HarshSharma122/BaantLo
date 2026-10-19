@@ -1,6 +1,6 @@
-import { Currentuser } from "@/lib/auth/CurrentUser";
 import MEMBER from "@/models/member.model/member.model";
 import TRIP from "@/models/trips.model/trips.model";
+import { Currentuser } from "@/lib/auth/CurrentUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -16,20 +16,37 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const findTrip = await TRIP.findById(tripId);
-    console.log(findTrip);
-    console.log("TRIP MEMBERS:", findTrip?.tripMembers);
-    console.log("TYPE:", typeof findTrip?.tripMembers?.[0]);
+    const Trip = await TRIP.findOne({ _id: tripId }).populate({
+      path: "tripMembers",
+      model: MEMBER,
+    });
 
-    const Trip = await TRIP.findById(tripId).populate("tripMembers");
+    const existEmail = Trip.tripMembers.find((f: any) => f.email == email);
+    if (existEmail) {
+      return NextResponse.json(
+        { msg: "Email is already exist please try different email" },
+        { status: 401 },
+      );
+    } else {
+      const member = await MEMBER.create({
+        name,
+        email,
+        phoneNo,
+        tripId,
+        tripName,
+        addedById: ownerId,
+      });
 
-    console.log(Trip);
+      await Trip.tripMembers.push(member._id);
 
-    return NextResponse.json(
-      { msg: "Member added successFully" },
-      { status: 200 },
-    );
-  } catch (error) {
-    return NextResponse.json({ msg: error }, { status: 500 });
+      Trip.save();
+      return NextResponse.json(
+        { msg: "Member added successFully" },
+        { status: 200 },
+      );
+    }
+  } catch (error: any) {
+
+    return NextResponse.json({ msg: error.message }, { status: 500 });
   }
 };

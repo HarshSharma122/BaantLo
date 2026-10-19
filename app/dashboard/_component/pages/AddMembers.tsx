@@ -3,7 +3,7 @@ import { tripProps } from '@/types/types';
 import { FormEvent, useState } from 'react';
 import { toast } from 'sonner';
 
-const AddMembers = ({ setAddmemberSectionOpen, trip }: { setAddmemberSectionOpen: Function, trip:tripProps }) => {
+const AddMembers = ({ setAddmemberSectionOpen, trip }: { setAddmemberSectionOpen: Function, trip: tripProps }) => {
     const [isAdded, setIsAdded] = useState(false);
     const [input, setInput] = useState({
         name: "",
@@ -26,12 +26,22 @@ const AddMembers = ({ setAddmemberSectionOpen, trip }: { setAddmemberSectionOpen
                 },
                 body: JSON.stringify({
                     ...input,
-                    tripName:trip.tripName,
-                    tripId:trip._id
+                    tripName: trip.tripName,
+                    tripId: trip._id
                 })
             })
 
+            const data = await response.json();
+            if (!response.ok) {
+                toast.message(data.msg);
+                setAddmemberSectionOpen(false);
 
+                setInput({
+                    name: "",
+                    email: "",
+                    phoneNo: "",
+                })
+            }
             if (response.ok) {
                 setIsAdded(false);
                 setAddmemberSectionOpen(false);
@@ -40,13 +50,9 @@ const AddMembers = ({ setAddmemberSectionOpen, trip }: { setAddmemberSectionOpen
                     name: "",
                     email: "",
                     phoneNo: "",
-
-
                 })
                 toast.message("Member is SuccessFully Added");
 
-            } else {
-                toast.error("Server side Error");
             }
 
         } catch (error) {
