@@ -406,6 +406,85 @@ const TripDetails = ({ id }: { id: any }) => {
                                 </div>
                             </div>
 
+
+
+                            {/*======== Member details============ */}
+                            <div className="rounded-[26px] border border-[#E6E6E0] bg-white p-6">
+
+                                <div className="mb-6 flex items-start justify-between">
+
+                                    <div>
+                                        <p className="text-xs font-medium tracking-wide text-[#999]">
+                                            Members
+                                        </p>
+
+                                        <h3 className="mt-1 text-xl font-semibold tracking-tight text-[#222]">
+                                            {trip?.tripMembers.length || "0"}
+                                        </h3>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div className="space-y-4">
+                                    {trip?.tripMembers.map((member, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-center justify-between"
+                                        >
+
+                                            <div className="flex items-center gap-3">
+
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0F8E7] text-sm font-semibold text-[#65A914]">
+                                                    {member.name.charAt(0)}
+                                                </div>
+
+                                                <div>
+                                                    <p className="text-sm font-medium text-[#222]">
+                                                        {member.name}
+                                                    </p>
+
+                                                    <p className="text-xs text-[#999]">
+                                                        {member.email}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="text-right">
+
+                                                <h2 className='text-xs'>Added</h2>
+
+
+                                                <p className="text-[11px] text-[#AAA]">
+                                                    {DateConvert(new Date(member.createdAt))}
+                                                </p>
+
+                                            </div>
+                                            <div className="text-right">
+
+                                                <Button variant="outline" className="text-xs">Remove</Button>
+
+                                            </div>
+
+
+
+                                        </div>
+                                    ))}
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
                             {/* ===== BALANCES ===== */}
                             <div className="rounded-[26px] border border-[#E6E6E0] bg-white p-6">
 

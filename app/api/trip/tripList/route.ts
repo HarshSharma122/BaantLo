@@ -1,4 +1,5 @@
 import { Currentuser } from "@/lib/auth/CurrentUser";
+import MEMBER from "@/models/member.model/member.model";
 import TRIP from "@/models/trips.model/trips.model";
 import { NextResponse } from "next/server";
 
@@ -6,7 +7,7 @@ export const GET = async () => {
   try {
     const user = await Currentuser();
     const userId = user._id;
-    const response = await TRIP.find({tripOwnerId:userId});
+    const response = await TRIP.find({tripOwnerId:userId})
     if(!response){
       return NextResponse.json({ msg:"No Trip found"}, { status: 200 });
     }
