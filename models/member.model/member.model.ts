@@ -25,11 +25,8 @@ const memberSchema = new Schema<membersProps>({
     required: true,
     default: false,
   },
-  sendingId: {
-    type: String,
-    required: true,
-  },
-  memberId: {
+ 
+  addedById: {
     type: String,
   },
 },{timestamps:true});

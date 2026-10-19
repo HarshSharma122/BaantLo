@@ -69,12 +69,15 @@ const TripDetails = ({ id }: { id: any }) => {
     const [openExpenseInput, setOpenExpenseInput] = useState(false);
     const [notification, setNotification] = useState(false);
 
+
+
+
     useEffect(() => {
         const tripDetail = async () => {
             try {
                 const response = await fetch(`/api/trip/${id}`);
                 const data = await response.json();
-                if (response.status!=200) {
+                if (response.status != 200) {
                     setTrip(undefined);
                     toast.error(data.msg);
                     router.push("/dashboard/trips");
@@ -128,13 +131,18 @@ const TripDetails = ({ id }: { id: any }) => {
 
                             <h1 className='text-2xl font-semibold'>{trip?.tripName || "_"}</h1>
                             <p className="mt-1 line-clamp-2 min-h-10 text-sm leading-5 text-neutral-500">
-                              {trip?.tripDesc || "NONE"}
+                                {trip?.tripDesc || "NONE"}
                             </p>
 
                         </div>
 
                         <div className="space-x-2 lg:mb-0 mb-2">
-                            <Button onClick={() => setNotification(true)}>Trip Ended</Button>
+                            {
+                                !trip?.isTripEnded && (
+
+                                    <Button onClick={() => setNotification(true)}>Trip Ended</Button>
+                                )
+                            }
                             <Button onClick={() => setOpenExpenseInput(true)} variant="outline">Add Expenses</Button>
                         </div>
 
@@ -225,7 +233,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                     </p>
 
                                     <p className="mt-1 text-2xl font-semibold text-[#222]">
-                                       {trip?.tripMembers.length || 0}
+                                        {trip?.tripMembers.length || 0}
                                     </p>
                                 </div>
 
@@ -339,12 +347,12 @@ const TripDetails = ({ id }: { id: any }) => {
                                         </p>
 
                                         <h3 className="mt-1 text-xl font-semibold tracking-tight text-[#222]">
-                                          {trip?.tripName || "_"}
+                                            {trip?.tripName || "_"}
                                         </h3>
                                     </div>
 
                                     <span className="rounded-full bg-[#F0F8E7] px-3 py-1.5 text-xs font-semibold text-[#65A914]">
-                                        Active
+                                        {trip?.isTripEnded ? "Completed" : "Active"}
                                     </span>
 
                                 </div>
@@ -367,7 +375,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </p>
 
                                             <p className="mt-0.5 text-sm font-medium text-[#222]">
-                                               {trip?.tripLocation || "NONE"}
+                                                {trip?.tripLocation || "NONE"}
                                             </p>
                                         </div>
 
@@ -389,7 +397,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </p>
 
                                             <p className="mt-0.5 text-sm font-medium text-[#222]">
-                                               {trip?.tripStartDate && DateConvert(new Date(trip?.tripStartDate))} —  {trip?.tripEndDate ? DateConvert(new Date(trip?.tripEndDate)) : "Not Confirmed"}
+                                                {trip?.tripStartDate && DateConvert(new Date(trip?.tripStartDate))} —  {trip?.tripEndDate ? DateConvert(new Date(trip?.tripEndDate)) : "Not Confirmed"}
                                             </p>
                                         </div>
 
@@ -580,7 +588,7 @@ const TripDetails = ({ id }: { id: any }) => {
 
                 {
                     notification && (
-                        <Notification setNotification={setNotification} />
+                        <Notification tripId={id} setNotification={setNotification} />
                     )
                 }
             </div>

@@ -6,14 +6,15 @@ import Link from 'next/link';
 import { tripProps } from '@/types/types';
 import Image from 'next/image';
 import { DateConvert } from '@/utils/DateConversion/DateConversion';
+import { toast } from 'sonner';
+import AddMembers from './AddMembers';
 
 
 const TripList = () => {
     const [trips, setTrips] = useState<tripProps[]>([]);
-
     const [loading, setLoading] = useState(true);
-
-
+    const [addmemberSectionOpen, setAddmemberSectionOpen] = useState(false);
+    const[selectedTrip, setSelectedTrip] = useState<tripProps>();
 
 
     useEffect(() => {
@@ -37,6 +38,10 @@ const TripList = () => {
 
         tripList();
     }, [])
+
+
+
+
 
 
 
@@ -114,19 +119,12 @@ const TripList = () => {
                                         </span>
                                     </div>
 
-                                    {/* <div className="flex items-center gap-3 text-sm text-neutral-600">
-                                    <Wallet size={17} className="shrink-0 text-neutral-400" />
-                                    <span>
-                                        Budget:{" "}
-                                        <span className="font-semibold text-neutral-900">
-                                            {new Intl.NumberFormat("en-IN", {
-                                                style: "currency",
-                                                currency: trip.tripCurrency || "INR",
-                                                maximumFractionDigits: 0,
-                                            }).format(trip.tripBudget)}
-                                        </span>
-                                    </span>
-                                </div> */}
+                                    <div className="flex items-center gap-3 text-sm text-neutral-600">
+                                        <Button onClick={() => {
+                                            setSelectedTrip(trip);
+                                            setAddmemberSectionOpen(true)                
+                                            }} variant="outline">Add Members</Button>
+                                    </div>
                                 </div>
 
                                 {/* Card footer */}
@@ -158,6 +156,16 @@ const TripList = () => {
 
 
             </div>
+
+
+
+
+            {
+                addmemberSectionOpen && selectedTrip && (
+                  <AddMembers trip={selectedTrip} setAddmemberSectionOpen={ setAddmemberSectionOpen}/>
+
+                )
+            }
         </>
     )
 }

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 export interface userProps {
   _id: mongoose.Types.ObjectId;
@@ -33,7 +33,7 @@ export interface tripProps {
   tripLocation: string;
   tripMoney: string;
   tripCurrency: string;
-  tripMembers: [];
+  tripMembers: membersProps[];
   tripExpense: [tripExpensesProps];
   tripHistory: [string];
   createdAt: Date;
@@ -41,6 +41,7 @@ export interface tripProps {
 }
 
 export interface membersProps {
+  _id:mongoose.Types.ObjectId
   name: string;
   email: string;
   phoneNo: string;
@@ -48,5 +49,7 @@ export interface membersProps {
   tripName: string;
   isAccepted: boolean;
   sendingId: string;
-  memberId: string;
+  addedById: string;
+  createdAt:Date;
+  updatedAt:Date
 }

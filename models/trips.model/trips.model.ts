@@ -28,6 +28,7 @@ const tripSchema = new Schema<tripProps>(
     },
     isTripEnded: {
       type: Boolean,
+      default:false
     },
     tripLocation: {
       type: String,
@@ -54,7 +55,7 @@ const tripSchema = new Schema<tripProps>(
     tripMembers: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "member",
+        ref: "MEMBER",
       },
     ],
   },

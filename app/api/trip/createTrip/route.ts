@@ -1,5 +1,6 @@
 import { Currentuser } from "@/lib/auth/CurrentUser";
 import TRIP from "@/models/trips.model/trips.model";
+import { responseCookiesToRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -38,8 +39,6 @@ export const POST = async (req: NextRequest) => {
       tripEndDate: endDate ? endDate : "",
       tripOwnerId: ownerId,
     });
-
-
     
     return NextResponse.json({ msg: "Trip is successFully created"}, { status: 200 });
 
