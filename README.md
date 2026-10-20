@@ -22,7 +22,6 @@ BaantLo solves this by allowing users to create trips, invite friends, record ex
 
 ## 📸 Screenshots
 
-> Add screenshots of your application here.
 
 ### Dashboard
 
