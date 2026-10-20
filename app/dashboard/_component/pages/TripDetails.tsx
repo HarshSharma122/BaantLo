@@ -1,9 +1,9 @@
 
 "use client"
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import { ArrowUpRight, CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Receipt, TrendingUp, Users, Wallet } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import AddExpense from './AddExpense';
 import Notification from '@/components/pages/Notification';
 import { tripProps } from '@/types/types';
