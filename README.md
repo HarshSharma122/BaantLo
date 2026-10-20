@@ -26,7 +26,8 @@ BaantLo solves this by allowing users to create trips, invite friends, record ex
 
 ### Dashboard
 
-![Dashboard](./screenshots/dashboard.png)
+<img width="1891" height="905" alt="dashboard" src="https://github.com/user-attachments/assets/a04c4fb4-6ebc-4ce7-bde1-b3dd07e28062" />
+
 
 ### Create Trip
 
