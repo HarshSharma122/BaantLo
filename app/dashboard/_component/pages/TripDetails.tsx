@@ -68,6 +68,60 @@ const TripDetails = ({ id }: { id: any }) => {
     const [loading, setLoading] = useState(true);
     const [openExpenseInput, setOpenExpenseInput] = useState(false);
     const [notification, setNotification] = useState(false);
+    const [openDeleteNotification, setOpenDeleteNotification] = useState(false);
+    const[tripmemberId, setTripMemberId] = useState(Object);
+
+
+
+    const[isDeleted, setIsDeleted] = useState(false);
+
+
+
+    const deleteMember = async()=>{
+        setIsDeleted(true);
+        try {
+            const response = await fetch("/api/trip/members/delete-member", {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    tripId:trip?._id,
+                    memberId:tripmemberId
+                })
+            });
+
+
+            const data = await response.json();
+
+
+            if(!response.ok){
+                setOpenDeleteNotification(false);
+                toast.error(data.msg);
+                setIsDeleted(false);
+            }
+            
+            if(response.ok){
+                setOpenDeleteNotification(false);
+
+
+                toast.message(data.msg);
+                setIsDeleted(false);
+
+
+                router.push("/dashboard/trips")
+            }            
+
+        } catch (error) {
+            console.log(error);
+            
+            toast.error("Server Error! please try again later");
+            
+        }
+    }
+
+
+
 
 
 
@@ -464,7 +518,11 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </div>
                                             <div className="text-right">
 
-                                                <Button variant="outline" className="text-xs">Remove</Button>
+                                                <Button onClick={() =>{
+                                                 setOpenDeleteNotification(true)
+                                                 setTripMemberId(member._id)   
+                                                }
+                                                 } variant="outline" className="text-xs">Remove</Button>
 
                                             </div>
 
@@ -672,6 +730,36 @@ const TripDetails = ({ id }: { id: any }) => {
                 }
             </div>
 
+
+
+
+
+            {
+                openDeleteNotification && (
+                    <div className='fixed inset-0 bg-black/40 flex items-center justify-center z-50'>
+                        <div className="bg-white w-full max-w-md  rounded-xl p-6 shadow-lg">
+
+
+                            <h1 className=''>You want to delete the member</h1>
+
+
+                            <div className="mt-5 space-x-4">
+
+
+
+                            <Button  disabled={isDeleted} onClick={deleteMember}>Confirm</Button>
+                            <Button onClick={()=>setOpenDeleteNotification(false)} variant="outline">Cancel</Button>
+
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                )
+            }
 
         </>
     )

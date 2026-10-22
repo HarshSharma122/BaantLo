@@ -12,7 +12,6 @@ const memberSchema = new Schema<membersProps>({
   },
   phoneNo: {
     type: String,
-    required: true,
   },
   tripId:{
     type:String,

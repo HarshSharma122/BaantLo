@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { toast } from 'sonner';
 
 const CreateTrip = ({ setIsOpen }: { setIsOpen: Function }) => {
+    const router  = useRouter();
     const [isSubmit, setIsSubmit] = useState(false);
     const [input, setInput] = useState({
         tripName: "",
@@ -37,6 +39,8 @@ const CreateTrip = ({ setIsOpen }: { setIsOpen: Function }) => {
             if (response.ok) {
                 setIsSubmit(false);
                 setIsOpen(false);
+
+                router.push("/dashboard/trips")
 
                 setInput({
                     tripName: "",
