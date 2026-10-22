@@ -22,23 +22,26 @@ BaantLo solves this by allowing users to create trips, invite friends, record ex
 
 ## 📸 Screenshots
 
-> Add screenshots of your application here.
 
 ### Dashboard
 
-![Dashboard](./screenshots/dashboard.png)
+<img width="1891" height="905" alt="dashboard" src="https://github.com/user-attachments/assets/a04c4fb4-6ebc-4ce7-bde1-b3dd07e28062" />
+
 
 ### Create Trip
 
-![Create Trip](./screenshots/create-trip.png)
+<img width="1230" height="801" alt="create-trip" src="https://github.com/user-attachments/assets/e8bcbcf6-759c-415f-9131-ab02ee6b094f" />
+
 
 ### Trip Expenses
 
-![Trip Expenses](./screenshots/expense.png)
+<img width="1797" height="872" alt="expense" src="https://github.com/user-attachments/assets/aa1b07e8-1c1d-4600-b18e-30f8bce74bd3" />
+
 
 ### Trip Full details
 
-![Settlement](./screenshots/trips.png)
+<img width="1876" height="900" alt="trips" src="https://github.com/user-attachments/assets/1c50c305-e907-473c-a873-c24cb89b7ef9" />
+
 
 ---
 
