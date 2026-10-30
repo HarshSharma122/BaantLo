@@ -149,8 +149,15 @@ const TripDetails = ({ id }: { id: any }) => {
 
 
 
+    const totalSum = trip?.tripExpense.reduce((prev, curr) => {
+        return prev + Number(curr.amount)
+    }, 0) || 0;
 
 
+
+
+
+    const avgPerPerson = totalSum / trip?.tripMembers?.length!;
 
     return (
         <>
@@ -175,7 +182,12 @@ const TripDetails = ({ id }: { id: any }) => {
                                     <Button onClick={() => setNotification(true)}>Trip Ended</Button>
                                 )
                             }
-                            <Button onClick={() => setOpenExpenseInput(true)} variant="outline">Add Expenses</Button>
+
+                            {
+                                !trip?.isTripEnded && (
+                                    <Button onClick={() => setOpenExpenseInput(true)} variant="outline">Add Expenses</Button>
+                                )
+                            }
                         </div>
 
                     </div>
@@ -206,11 +218,11 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </p>
 
                                             <h2 className="mt-3 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
-                                                ₹11,000
+                                                ₹{totalSum}
                                             </h2>
 
                                             <p className="mt-2 text-sm text-white/50">
-                                                across 8 recorded expenses
+                                                across {trip?.tripExpense.length || 0} recorded expenses
                                             </p>
                                         </div>
 
@@ -220,7 +232,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                     </div>
 
                                     {/* Budget */}
-                                    <div className="mt-8">
+                                    {/* <div className="mt-8">
 
                                         <div className="mb-2 flex justify-between text-xs">
                                             <span className="text-white/50">
@@ -246,7 +258,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </span>
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
 
@@ -297,7 +309,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                     </p>
 
                                     <p className="mt-1 text-2xl font-semibold text-[#222]">
-                                        ₹3,667
+                                        ₹{avgPerPerson}
                                     </p>
                                 </div>
 
@@ -754,7 +766,7 @@ const TripDetails = ({ id }: { id: any }) => {
                             {/* Header */}
                             <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
                                 <div>
-                                  
+
                                     <h2 className="mt-1 text-xl font-bold">
                                         Expense Information
                                     </h2>
@@ -773,7 +785,7 @@ const TripDetails = ({ id }: { id: any }) => {
 
                                 {/* Expense Icon & Title */}
                                 <div className="mb-6 flex items-center gap-4">
-                                   
+
 
                                     <div className="min-w-0">
                                         <p className="text-xs">
@@ -788,7 +800,7 @@ const TripDetails = ({ id }: { id: any }) => {
                                 {/* Date */}
                                 <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
                                     <div className="flex items-center gap-3">
-                                       
+
                                         <div>
                                             <p className="text-xs ">Expense Date</p>
                                             <h3 className="mt-1 text-sm ">

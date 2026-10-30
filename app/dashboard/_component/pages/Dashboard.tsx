@@ -1,6 +1,70 @@
+import { DateConvert } from '@/utils/DateConversion/DateConversion';
 import { CalendarDays, ChevronRight, Clock3, MapPin, Users, Wallet } from 'lucide-react'
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
+
+
+    const [expense] = useState<{ activeTrip: any, totalAmount: string, completedTrip: any }>({
+        totalAmount: "",
+        completedTrip: [],
+        activeTrip: {}
+    });
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+
+        async function data() {
+            try {
+                const res = await fetch("/api/dashboard");
+                if (!res.ok) {
+                    return;
+                }
+
+                const data = await res.json();
+                expense.totalAmount = data.totalAmount;
+                expense.completedTrip = data.completedTrip;
+                expense.activeTrip = data.activeTrip
+
+
+            } catch {
+
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        data();
+    }, [])
+
+
+
+
+
+
+
+
+    if (loading) {
+        return (
+            <div className="h-full w-full flex-col flex items-center justify-center min-h-screen">
+                <Image
+                    src="/logo-1.png"
+                    loading="eager"
+                    width={230}
+                    height={230}
+                    alt="logo"
+                    className="animate-pulse duration-700"
+                />
+            </div>
+        )
+    }
+
+
+
+
+
     return (
         <div className='mt-10'>
             <div className="grid gap-5 lg:grid-cols-[1.6fr_1fr]">
@@ -25,7 +89,7 @@ const Dashboard = () => {
                                     </p>
 
                                     <h2 className="mt-3 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
-                                        ₹11,000
+                                        ₹{expense.totalAmount}
                                     </h2>
 
 
@@ -194,6 +258,8 @@ const Dashboard = () => {
                         </div>
                     </div>
 
+
+
                     {/* ===== BALANCES ===== */}
                     <div className="rounded-[26px] border border-[#E6E6E0] bg-white p-6">
 
@@ -202,58 +268,90 @@ const Dashboard = () => {
                                 Active Trips
                             </h3>
 
-                            <p className="mt-1 text-xs text-[#999]">
-                                Trips you're currently part of
-                            </p>
-                        </div>
 
-                        <div className="space-y-4">
 
-                            {/* {members.map((member) => (
-                                <div
-                                    key={member.name}
-                                    className="flex items-center justify-between"
-                                >
 
-                                    <div className="flex items-center gap-3">
+                            <div className="mb-6 flex items-start justify-between">
 
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F0F8E7] text-sm font-semibold text-[#65A914]">
-                                            {member.initials}
-                                        </div>
+                                <div>
 
-                                        <div>
-                                            <p className="text-sm font-medium text-[#222]">
-                                                {member.name}
-                                            </p>
+                                    <h3 className="mt-1 text-xl font-semibold tracking-tight text-[#222]">
+                                        {expense.activeTrip?.tripName!}
+                                    </h3>
+                                </div>
 
-                                            <p className="text-xs text-[#999]">
-                                                Paid {member.paid}
-                                            </p>
-                                        </div>
+                                <span className="rounded-full bg-[#F0F8E7] px-3 py-1.5 text-xs font-semibold text-[#65A914]">
+                                    Active
+                                </span>
 
+                            </div>
+
+                            <div className="space-y-4">
+
+                                {/* Destination */}
+                                <div className="flex items-center gap-3">
+
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F6F6F2]">
+                                        <MapPin
+                                            size={17}
+                                            className="text-[#85D91F]"
+                                        />
                                     </div>
 
-                                    <div className="text-right">
-
-                                        <p
-                                            className={`text-sm font-semibold ${member.balance.startsWith("+")
-                                                    ? "text-[#65A914]"
-                                                    : "text-[#C26B5A]"
-                                                }`}
-                                        >
-                                            {member.balance}
+                                    <div>
+                                        <p className="text-xs text-[#999]">
+                                            Destination
                                         </p>
 
-                                        <p className="text-[11px] text-[#AAA]">
-                                            {member.status}
+                                        <p className="mt-0.5 text-sm font-medium text-[#222]">
+                                            {expense.activeTrip.tripLocation}
                                         </p>
-
                                     </div>
 
                                 </div>
-                            ))} */}
+
+                                {/* Date */}
+                                <div className="flex items-center gap-3">
+
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F6F6F2]">
+                                        <CalendarDays
+                                            size={17}
+                                            className="text-[#85D91F]"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <p className="text-xs text-[#999]">
+                                            Trip start Date
+                                        </p>
+
+                                        <p className="mt-0.5 text-sm font-medium text-[#222]">
+                                            {DateConvert(new Date(expense.activeTrip.tripStartDate))}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         </div>
+
+
                     </div>
 
 
@@ -276,50 +374,29 @@ const Dashboard = () => {
 
                         <div className="relative ml-2 border-l border-[#E5E5DF] pl-5">
 
+
+
+                            {
+                                expense.completedTrip.map((trip: any, index: number) => (
+
+                                    <div key={index} className="relative pb-5">
+
+                                        <span className="absolute -left-[25px] top-1 h-2 w-2 rounded-full bg-[#85D91F]" />
+
+                                        <p className="text-sm font-medium text-[#222]">
+                                            {trip.tripName}
+                                        </p>
+
+                                        <p className="mt-1 text-xs text-[#999]">
+                                            {trip.tripLocation}
+                                        </p>
+
+                                    </div>
+                                ))
+                            }
                             {/* Activity 1 */}
-                            <div className="relative pb-5">
 
-                                <span className="absolute -left-[25px] top-1 h-2 w-2 rounded-full bg-[#85D91F]" />
 
-                                <p className="text-sm font-medium text-[#222]">
-                                    Alex added Hotel Booking
-                                </p>
-
-                                <p className="mt-1 text-xs text-[#999]">
-                                    ₹5,400 · 2 hours ago
-                                </p>
-
-                            </div>
-
-                            {/* Activity 2 */}
-                            <div className="relative pb-5">
-
-                                <span className="absolute -left-[25px] top-1 h-2 w-2 rounded-full bg-[#D5D8CF]" />
-
-                                <p className="text-sm font-medium text-[#222]">
-                                    Priya added Dinner at Café
-                                </p>
-
-                                <p className="mt-1 text-xs text-[#999]">
-                                    ₹2,100 · Yesterday
-                                </p>
-
-                            </div>
-
-                            {/* Activity 3 */}
-                            <div className="relative">
-
-                                <span className="absolute -left-[25px] top-1 h-2 w-2 rounded-full bg-[#D5D8CF]" />
-
-                                <p className="text-sm font-medium text-[#222]">
-                                    Rahul joined the trip
-                                </p>
-
-                                <p className="mt-1 text-xs text-[#999]">
-                                    2 days ago
-                                </p>
-
-                            </div>
 
                         </div>
                     </div>
