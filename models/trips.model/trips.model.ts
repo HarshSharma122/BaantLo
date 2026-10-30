@@ -8,6 +8,12 @@ const tripExpenses = new Schema<tripExpensesProps>({
   amount: {
     type: String,
   },
+  dateofExpense:{
+    type:String,
+  },
+   expenseDesc:{
+    type:String,
+   },
   paidBy: {
     type: String,
   },

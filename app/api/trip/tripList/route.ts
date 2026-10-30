@@ -44,11 +44,6 @@ export const GET = async () => {
       }
     }).sort({createdAt:-1});
 
-
-
-
-
-
     if (!response) {
       return NextResponse.json({ msg: "No Trip found" }, { status: 200 });
     }

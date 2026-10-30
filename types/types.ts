@@ -19,6 +19,8 @@ export interface tripExpensesProps {
   expenseTitle: string;
   amount: string;
   paidBy: string;
+   expenseDesc:string;
+   dateofExpense:string;
   paidUserId: string;
 }
 
@@ -39,6 +41,9 @@ export interface tripProps {
   createdAt: Date;
   updatedAt: Date;
 }
+
+
+
 
 export interface membersProps {
   _id:mongoose.Types.ObjectId

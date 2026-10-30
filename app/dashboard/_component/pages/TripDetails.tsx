@@ -2,11 +2,11 @@
 "use client"
 
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Receipt, TrendingUp, Users, Wallet } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, CheckCircle2, ChevronRight, Clock3, IndianRupee, MapPin, Receipt, TrendingUp, Users, Wallet } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AddExpense from './AddExpense';
 import Notification from '@/components/pages/Notification';
-import { tripProps } from '@/types/types';
+import { tripExpensesProps, tripProps } from '@/types/types';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -36,32 +36,7 @@ const members = [
     },
 ];
 
-const expenses = [
-    {
-        title: "Hotel Booking",
-        person: "Alex",
-        amount: "₹5,400",
-        icon: "🏨",
-    },
-    {
-        title: "Dinner at Café",
-        person: "Priya",
-        amount: "₹2,100",
-        icon: "🍽️",
-    },
-    {
-        title: "Cab & Transport",
-        person: "Alex",
-        amount: "₹1,200",
-        icon: "🚕",
-    },
-    {
-        title: "Snacks",
-        person: "Rahul",
-        amount: "₹650",
-        icon: "🍿",
-    },
-];
+
 const TripDetails = ({ id }: { id: any }) => {
     const router = useRouter();
     const [trip, setTrip] = useState<tripProps>();
@@ -69,25 +44,28 @@ const TripDetails = ({ id }: { id: any }) => {
     const [openExpenseInput, setOpenExpenseInput] = useState(false);
     const [notification, setNotification] = useState(false);
     const [openDeleteNotification, setOpenDeleteNotification] = useState(false);
-    const[tripmemberId, setTripMemberId] = useState(Object);
+    const [tripmemberId, setTripMemberId] = useState(Object);
+
+    const [expenseViewOpen, setExpenseViewOpen] = useState(false);
+    const [particularExpenseDetails, setParticularExpenseDetails] = useState<tripExpensesProps>();
 
 
 
-    const[isDeleted, setIsDeleted] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
 
 
 
-    const deleteMember = async()=>{
+    const deleteMember = async () => {
         setIsDeleted(true);
         try {
             const response = await fetch("/api/trip/members/delete-member", {
-                method:"PUT",
-                headers:{
-                    "Content-Type":"application/json"
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                body:JSON.stringify({
-                    tripId:trip?._id,
-                    memberId:tripmemberId
+                body: JSON.stringify({
+                    tripId: trip?._id,
+                    memberId: tripmemberId
                 })
             });
 
@@ -95,13 +73,13 @@ const TripDetails = ({ id }: { id: any }) => {
             const data = await response.json();
 
 
-            if(!response.ok){
+            if (!response.ok) {
                 setOpenDeleteNotification(false);
                 toast.error(data.msg);
                 setIsDeleted(false);
             }
-            
-            if(response.ok){
+
+            if (response.ok) {
                 setOpenDeleteNotification(false);
 
 
@@ -110,13 +88,13 @@ const TripDetails = ({ id }: { id: any }) => {
 
 
                 router.push("/dashboard/trips")
-            }            
+            }
 
         } catch (error) {
             console.log(error);
-            
+
             toast.error("Server Error! please try again later");
-            
+
         }
     }
 
@@ -352,7 +330,7 @@ const TripDetails = ({ id }: { id: any }) => {
 
                                 <div className="divide-y divide-[#EEEEEA]">
 
-                                    {expenses.map((expense, index) => (
+                                    {trip?.tripExpense.map((expense, index) => (
                                         <div
                                             key={index}
                                             className="flex items-center justify-between py-4 first:pt-0 last:pb-0"
@@ -361,24 +339,33 @@ const TripDetails = ({ id }: { id: any }) => {
                                             <div className="flex items-center gap-3">
 
                                                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F6F6F2] text-lg">
-                                                    {expense.icon}
+                                                    <IndianRupee className='w-4 h-4' />
                                                 </div>
 
                                                 <div>
                                                     <p className="text-sm font-medium text-[#252525]">
-                                                        {expense.title}
+                                                        {expense.expenseTitle.toLocaleUpperCase()}
                                                     </p>
 
                                                     <p className="mt-1 text-xs text-[#999]">
-                                                        Paid by {expense.person}
+                                                        Paid by {expense.paidBy}
                                                     </p>
                                                 </div>
 
                                             </div>
 
-                                            <p className="text-sm font-semibold text-[#222]">
-                                                {expense.amount}
-                                            </p>
+                                            <div className="flex items-center justify-center gap-3">
+
+                                                <p className="text-sm font-semibold text-[#222]">
+                                                    ₹{expense.amount}
+                                                </p>
+
+
+                                                <Button onClick={() => {
+                                                    setExpenseViewOpen(true)
+                                                    setParticularExpenseDetails(expense)
+                                                }} variant="outline">view</Button>
+                                            </div>
 
                                         </div>
                                     ))}
@@ -518,11 +505,11 @@ const TripDetails = ({ id }: { id: any }) => {
                                             </div>
                                             <div className="text-right">
 
-                                                <Button onClick={() =>{
-                                                 setOpenDeleteNotification(true)
-                                                 setTripMemberId(member._id)   
+                                                <Button onClick={() => {
+                                                    setOpenDeleteNotification(true)
+                                                    setTripMemberId(member._id)
                                                 }
-                                                 } variant="outline" className="text-xs">Remove</Button>
+                                                } variant="outline" className="text-xs">Remove</Button>
 
                                             </div>
 
@@ -718,7 +705,7 @@ const TripDetails = ({ id }: { id: any }) => {
                 {
                     openExpenseInput && (
 
-                        <AddExpense setOpenExpenseInput={setOpenExpenseInput} />
+                        <AddExpense tripId={id} setOpenExpenseInput={setOpenExpenseInput} />
                     )
                 }
 
@@ -729,10 +716,6 @@ const TripDetails = ({ id }: { id: any }) => {
                     )
                 }
             </div>
-
-
-
-
 
             {
                 openDeleteNotification && (
@@ -747,8 +730,8 @@ const TripDetails = ({ id }: { id: any }) => {
 
 
 
-                            <Button  disabled={isDeleted} onClick={deleteMember}>Confirm</Button>
-                            <Button onClick={()=>setOpenDeleteNotification(false)} variant="outline">Cancel</Button>
+                                <Button disabled={isDeleted} onClick={deleteMember}>Confirm</Button>
+                                <Button onClick={() => setOpenDeleteNotification(false)} variant="outline">Cancel</Button>
 
                             </div>
 
@@ -761,6 +744,89 @@ const TripDetails = ({ id }: { id: any }) => {
                 )
             }
 
+            {
+                expenseViewOpen && particularExpenseDetails && (
+
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+
+                        <div className="w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+
+                            {/* Header */}
+                            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+                                <div>
+                                  
+                                    <h2 className="mt-1 text-xl font-bold">
+                                        Expense Information
+                                    </h2>
+                                </div>
+
+                                <button
+                                    onClick={() => setExpenseViewOpen(false)}
+                                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-gray-200 hover:text-gray-900"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            {/* Content */}
+                            <div className="p-6">
+
+                                {/* Expense Icon & Title */}
+                                <div className="mb-6 flex items-center gap-4">
+                                   
+
+                                    <div className="min-w-0">
+                                        <p className="text-xs">
+                                            EXPENSE TITLE
+                                        </p>
+                                        <h1 className="mt-1 break-words text-lg">
+                                            {particularExpenseDetails.expenseTitle.toUpperCase()}
+                                        </h1>
+                                    </div>
+                                </div>
+
+                                {/* Date */}
+                                <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                                    <div className="flex items-center gap-3">
+                                       
+                                        <div>
+                                            <p className="text-xs ">Expense Date</p>
+                                            <h3 className="mt-1 text-sm ">
+                                                {DateConvert(new Date(particularExpenseDetails.dateofExpense))}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Description */}
+                                <div className="mt-5">
+                                    <h3 className="mb-2 text-sm">
+                                        Description
+                                    </h3>
+
+                                    <p className="rounded-xl border border-gray-100 p-4 text-sm leading-6">
+                                        {particularExpenseDetails.expenseDesc || "No description provided for this expense."}
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            {/* Footer */}
+                            <div className="flex justify-end border-t border-gray-100 bg-gray-50/70 px-6 py-4">
+                                <Button
+                                    onClick={() => setExpenseViewOpen(false)}
+                                    variant="outline"
+                                    className="rounded-xl px-6"
+                                >
+                                    Close
+                                </Button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                )
+            }
         </>
     )
 }

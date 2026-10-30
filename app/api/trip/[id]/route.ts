@@ -17,10 +17,14 @@ export const GET = async (
 
     const details = await TRIP.findOne({
       _id: id,
-    }).populate({
-      path:"tripMembers",
-      model:MEMBER
-    });;
+    })
+      .select(
+        "-tripExpense._id -tripExpense.paidUserId",
+      )
+      .populate({
+        path: "tripMembers",
+        model: MEMBER,
+      });
 
     if (!details) {
       return NextResponse.json(
@@ -29,7 +33,7 @@ export const GET = async (
       );
     }
 
-    return NextResponse.json({ msg: details}, { status: 200 });
+    return NextResponse.json({ msg: details }, { status: 200 });
   } catch (error) {
     console.log(error);
 
