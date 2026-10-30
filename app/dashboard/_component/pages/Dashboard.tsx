@@ -188,75 +188,7 @@ const Dashboard = () => {
                 {/* ================= RIGHT COLUMN ================= */}
                 <div className="space-y-5">
 
-                    {/* ===== TRIP DETAILS ===== */}
-                    <div className="rounded-[26px] border border-[#E6E6E0] bg-white p-6">
-
-                        <div className="mb-6 flex items-start justify-between">
-
-                            <div>
-                                <p className="text-xs font-medium tracking-wide text-[#999]">
-                                    CURRENT TRIP
-                                </p>
-
-                                <h3 className="mt-1 text-xl font-semibold tracking-tight text-[#222]">
-                                    Goa Getaway
-                                </h3>
-                            </div>
-
-                            <span className="rounded-full bg-[#F0F8E7] px-3 py-1.5 text-xs font-semibold text-[#65A914]">
-                                Active
-                            </span>
-
-                        </div>
-
-                        <div className="space-y-4">
-
-                            {/* Destination */}
-                            <div className="flex items-center gap-3">
-
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F6F6F2]">
-                                    <MapPin
-                                        size={17}
-                                        className="text-[#85D91F]"
-                                    />
-                                </div>
-
-                                <div>
-                                    <p className="text-xs text-[#999]">
-                                        Destination
-                                    </p>
-
-                                    <p className="mt-0.5 text-sm font-medium text-[#222]">
-                                        Goa, India
-                                    </p>
-                                </div>
-
-                            </div>
-
-                            {/* Date */}
-                            <div className="flex items-center gap-3">
-
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F6F6F2]">
-                                    <CalendarDays
-                                        size={17}
-                                        className="text-[#85D91F]"
-                                    />
-                                </div>
-
-                                <div>
-                                    <p className="text-xs text-[#999]">
-                                        Trip dates
-                                    </p>
-
-                                    <p className="mt-0.5 text-sm font-medium text-[#222]">
-                                        12 Oct — 16 Oct 2026
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
+                
 
 
 
@@ -394,7 +326,6 @@ const Dashboard = () => {
                                     </div>
                                 ))
                             }
-                            {/* Activity 1 */}
 
 
 
@@ -407,4 +338,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Dashboard;
